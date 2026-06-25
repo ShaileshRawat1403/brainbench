@@ -20,6 +20,7 @@
 | `issue-12` | `ready-for-review` |
 | `issue-13` | `done` |
 | `issue-14` | `done` |
+| `issue-15` | `done` |
 
 <!-- brainbench:generated:end -->
 
