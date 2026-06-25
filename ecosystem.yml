@@ -8,7 +8,7 @@ systems:
   brainbench:
     name: "BrainBench"
     role: "Operating memory and validation control plane"
-    repo: "ShaileshRawat1403/ai-sdlc-control-plane"
+    repo: "ShaileshRawat1403/brainbench"
     status: "active"
     priority: "high"
     current_branch: "feat/brainbench-v2-refactor"

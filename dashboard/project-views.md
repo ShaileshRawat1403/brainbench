@@ -6,7 +6,7 @@
 
 | System | Role | Repository | Status | Priority |
 |---|---|---|---|---|
-| **BrainBench** | Operating memory and validation control plane | `ShaileshRawat1403/ai-sdlc-control-plane` | `active` | `high` |
+| **BrainBench** | Operating memory and validation control plane | `ShaileshRawat1403/brainbench` | `active` | `high` |
 | **DAX** | Governed execution workstation for AI-assisted SDLC | `ShaileshRawat1403/dax` | `active` | `high` |
 | **Rook** | Repo/operator workbench for visible, governable AI-assisted work | `ShaileshRawat1403/rook` | `active` | `high` |
 | **Soothsayer** | Multi-user governance workspace catalog and approvals inbox | `ShaileshRawat1403/soothsayer` | `paused` | `medium` |

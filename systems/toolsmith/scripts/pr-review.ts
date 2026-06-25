@@ -98,7 +98,7 @@ let reviewBody = `# PR Review: PR #${prNumber} - ${prTitle}
 
 ## Metadata
 - **PR ID**: ${prNumber}
-- **Repository**: ShaileshRawat1403/ai-sdlc-control-plane
+- **Repository**: ShaileshRawat1403/brainbench
 - **Author**: ${prAuthor}
 - **Risk Level**: **${riskLevel.toUpperCase()}**
 - **Date**: ${new Date().toISOString().split('T')[0]}
