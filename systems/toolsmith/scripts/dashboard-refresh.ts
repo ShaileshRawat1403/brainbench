@@ -239,7 +239,27 @@ if (needsReviewTasks.length > 0) {
   indexContent += `- No tasks currently requiring human review.\n`;
 }
 
+let recommendedActions = '';
+if (needsReviewTasks.length > 0) {
+  recommendedActions += `- **Verify ready-for-review tasks**: Audit status and validation logs for ${needsReviewTasks.map(t => `\`${t.task}\``).join(', ')}.\n`;
+}
+if (prQueueCount > 0) {
+  recommendedActions += `- **Audit PR review queue**: Check risk assessments for pending pull requests.\n`;
+}
+if (evidenceGapsCount > 0) {
+  recommendedActions += `- **Remediate evidence gaps**: Link required PR numbers to ready/done tasks in active sprint backlog.\n`;
+}
+if (decisionGapsCount > 0) {
+  recommendedActions += `- **Remediate decision gaps**: Review generated candidate decision drafts under \`brain/decisions/drafts/\`.\n`;
+}
+if (!recommendedActions) {
+  recommendedActions = `- **Sprint Backlog Execution**: Ecosystem is stable with no outstanding gaps. Continue sprint backlog tasks.\n`;
+}
+
 indexContent += `
+### Recommended Actions
+${recommendedActions}
+
 ### Latest Operator Brief
 Refer to the detailed [Weekly Report](file://${path.join(DASHBOARD_DIR, 'weekly-report.md')}) for the operational brief.
 `;

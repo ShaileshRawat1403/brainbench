@@ -3,7 +3,7 @@
 <!-- brainbench:generated:start -->
 
 ## Operational Control Surface
-- **Last Updated**: 2026-06-25T15:01:16.511Z
+- **Last Updated**: 2026-06-25T15:35:57.404Z
 
 ### Current Status
 - **Active Sprint**: `Brain + Bench Foundation` (`active`)
@@ -20,6 +20,12 @@
 
 ### Needs Human Review
 - Task `issue-12` is `ready-for-review`
+
+### Recommended Actions
+- **Verify ready-for-review tasks**: Audit status and validation logs for `issue-12`.
+- **Audit PR review queue**: Check risk assessments for pending pull requests.
+- **Remediate evidence gaps**: Link required PR numbers to ready/done tasks in active sprint backlog.
+
 
 ### Latest Operator Brief
 Refer to the detailed [Weekly Report](file:///Users/ananyalayek/.gemini/antigravity/scratch/brainbench/dashboard/weekly-report.md) for the operational brief.

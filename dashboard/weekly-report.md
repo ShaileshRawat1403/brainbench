@@ -2,18 +2,12 @@
 
 <!-- brainbench:generated:start -->
 
-## Operational Brief Summary (2026-06-25)
-- **Report Mode**: `daily`
-- **Active Sprint Progress**: 5 / 7 tasks (71%)
-- **Field Trial Progress**: 3 / 3 tasks (100%)
-- **Active Systems**: BrainBench, DAX, Rook
+## Weekly Operating Metrics
 
-### Alerts & Gaps
-- **Decision Gaps**: 0 items flagged
-- **Evidence Gaps**: 1 items flagged
-
-### Recommended Actions
-- **Remediate Evidence**: Verify linked validation logs for ready/done items in `dashboard/evidence-gaps.md`.
+- **Last Updated**: 2026-06-25T15:35:57.403Z
+- **Active Systems Count**: 3
+- **Active Sprint Progress**: 5 / 7 (71%)
+- **Field Trial Progress**: 3 / 3 (100%)
 
 <!-- brainbench:generated:end -->
 
