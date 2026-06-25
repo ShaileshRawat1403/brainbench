@@ -1,62 +1,45 @@
 # Agent Instructions
 
-This repository is the control plane for the AI SDLC ecosystem.
+This repository is the operating memory and validation control plane (Brain + Bench) for the AI SDLC ecosystem.
 
-## Prime directive
+## Prime Directive
 
-Do not turn this repository into a product.
+Agents must act within supervised boundaries to maintain project context, compile validation evidence, log decisions, and update status dashboards.
 
-It is an execution ledger, not a dashboard, application, or automation platform.
-
-## Before doing work
-
-Read:
-
-1. `CONTROL.md`
-2. `ecosystem.yml`
-3. `daily/latest.md`
-4. relevant file under `systems/`
-5. relevant handoff under `handoffs/`
-
-## Allowed work
+## Allowed Work
 
 Agents may:
+- Update long-term memory, concepts, decisions, and product/project records in `brain/`.
+- Log sprint progress, tasks, evals, and validation evidence in `bench/`.
+- Log daily reports, templates, rules, and handoffs in `control/`.
+- Update markdown views in `dashboard/` summarizing operating state.
+- Keep session context up-to-date in `memory/active-context.md` to prevent cold restarts.
+- Write machine-readable state YAMLs in `state/` to coordinate automation.
+- Update system documentation status under `systems/`.
 
-- add daily reports
-- update system status
-- create handoff documents
-- record decisions
-- add parking lot items
-- prepare scoped branch plans
-- update `ecosystem.yml` when status changes
+## Restricted Work (Strict Boundaries)
 
-## Restricted work
+Agents MUST NOT change or perform the following without explicit human approval:
+- Secrets, credentials, or auth configs.
+- CI/CD workflows, build pipelines, or deployments.
+- Release scripts or package promotion rules.
+- Audit logic or policy engine settings.
+- Expanding tracked systems in `ecosystem.yml` or adding new folders to `systems/`.
+- Self-approving run reviews, claims verification, or merging code silently.
 
-Agents must not:
+## Required Handoff Structure
 
-- add dashboards
-- add app code
-- introduce broad automation
-- modify tracked product repos from this repo
-- expand beyond the five tracked systems
-- move a paused system to active without updating `CONTROL.md` and `ecosystem.yml`
+Every implementation handoff under `control/handoffs/` must include:
+- Objective
+- Repository
+- Branch
+- Status
+- Expected files changed
+- Validation commands
+- Non-goals
+- Stop conditions
+- Instructions for the next agent
 
-## Required handoff structure
+## Validation Discipline
 
-Every implementation handoff must include:
-
-- objective
-- repo
-- branch
-- status
-- exact files changed or expected
-- validation commands
-- non-goals
-- stop conditions
-- next agent instructions
-
-## Validation discipline
-
-If validation cannot be run, say so clearly and mark the relevant item as `needs_local_validation`.
-
-Do not claim a branch is ready unless validation evidence exists.
+Do not claim a branch or work item is ready unless validation evidence is recorded under `bench/validation/`. If local validation cannot be run, log it clearly as `needs_local_validation`.

@@ -4,11 +4,15 @@ This file defines the operating rules for the AI SDLC control plane.
 
 ## Scope
 
-This repository tracks only five systems:
+This repository tracks nine systems:
 
+- BrainBench
 - DAX
 - Rook
 - Soothsayer
+- Flowright
+- ToolSmith
+- Tessera
 - Picobot
 - PruningMyPothos
 
@@ -16,14 +20,15 @@ Do not add unrelated projects without updating `ecosystem.yml` and this file.
 
 ## Active system limit
 
-Maximum active systems at one time: 2.
+Maximum active systems at one time: 3.
 
 Current active systems:
 
+- BrainBench
 - DAX
 - Rook
 
-If a third system needs active work, one current active system must be moved to paused.
+If another system needs active work, one current active system must be moved to paused.
 
 ## Active branch limit
 
@@ -45,17 +50,19 @@ A handoff must include:
 - non-goals
 - stopping condition
 
+Handoff files are stored under `control/handoffs/`.
+
 ## Daily report rule
 
 Every day starts by reading the latest daily report before opening new work.
 
-Daily reports are stored under `daily/YYYY/MM/YYYY-MM-DD.md`.
+Daily reports are stored under `control/daily/YYYY/MM/YYYY-MM-DD.md`.
 
 ## Scope rule
 
 Do not bundle unrelated cleanup with implementation work.
 
-If an unrelated issue appears, add it to `backlog/parking-lot.md`.
+If an unrelated issue appears, add it to `bench/work-items/parking-lot.md`.
 
 ## Agent mode rule
 

@@ -1,0 +1,7 @@
+memory_index:
+  active_context: "memory/active-context.md"
+  project_map: "memory/project-map.md"
+  decision_map: "memory/decision-map.md"
+  claim_register: "memory/claim-register.md"
+  claims_count: 1
+  decisions_count: 2

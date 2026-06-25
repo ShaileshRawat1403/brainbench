@@ -45,4 +45,4 @@
 
 ## Notes
 
-Add only status-relevant notes here. Move ideas to `backlog/parking-lot.md`.
+Add only status-relevant notes here. Move ideas to `bench/work-items/parking-lot.md`.

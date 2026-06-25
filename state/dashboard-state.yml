@@ -1,0 +1,8 @@
+dashboard_state:
+  last_generation: "2026-06-25T07:52:48+05:30"
+  metrics:
+    active_systems: 3
+    paused_systems: 4
+    unmapped_systems: 2
+    open_prs: 0
+    sprint_progress_percentage: 66

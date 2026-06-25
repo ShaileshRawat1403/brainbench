@@ -1,0 +1,30 @@
+active_systems:
+  - id: brainbench
+    branch: feat/brainbench-v2-refactor
+    status: active
+  - id: dax
+    branch: feat/sdlc-verification-harness
+    status: active
+  - id: rook
+    branch: feat/sdlc-verification-harness
+    status: active
+paused_systems:
+  - id: soothsayer
+    branch: null
+    status: paused
+  - id: flowright
+    branch: null
+    status: paused
+  - id: toolsmith
+    branch: null
+    status: paused
+  - id: tessera
+    branch: null
+    status: paused
+unmapped_systems:
+  - id: picobot
+    branch: null
+    status: unmapped
+  - id: pruningmypothos
+    branch: null
+    status: unmapped

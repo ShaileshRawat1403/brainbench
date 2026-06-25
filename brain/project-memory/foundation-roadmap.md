@@ -78,7 +78,7 @@ Goal: decide whether the daily report workflow is enough.
 
 Allowed additions:
 
-- update `daily/latest.md`
+- update `control/daily/latest.md`
 - inject static status from `ecosystem.yml`
 
 Not allowed yet:

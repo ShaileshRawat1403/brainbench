@@ -1,10 +1,20 @@
 ecosystem:
   name: "AI SDLC Control Plane"
   owner: "Shailesh Rawat"
-  purpose: "Track AI-assisted SDLC status, branches, handoffs, decisions, and scope boundaries."
+  purpose: "Track AI-assisted SDLC status, branches, handoffs, decisions, memory, and validation state."
   timezone: "Asia/Kolkata"
 
 systems:
+  brainbench:
+    name: "BrainBench"
+    role: "Operating memory and validation control plane"
+    repo: "ShaileshRawat1403/ai-sdlc-control-plane"
+    status: "active"
+    priority: "high"
+    current_branch: "feat/brainbench-v2-refactor"
+    next_action: "Complete Phase 1 refactor verification and publish dogfooding logs"
+    blocked_by: null
+
   dax:
     name: "DAX"
     role: "Governed execution workstation for AI-assisted SDLC"
@@ -27,12 +37,42 @@ systems:
 
   soothsayer:
     name: "Soothsayer"
-    role: "Multi-user governance workspace"
+    role: "Multi-user governance workspace catalog and approvals inbox"
     repo: "ShaileshRawat1403/soothsayer"
     status: "paused"
     priority: "medium"
     current_branch: null
     next_action: "Do not modify until DAX/Rook SDLC slice stabilizes"
+    blocked_by: "Focus limit"
+
+  flowright:
+    name: "Flowright"
+    role: "Governance-first workflow execution kernel and orchestration"
+    repo: "ShaileshRawat1403/flowright"
+    status: "paused"
+    priority: "medium"
+    current_branch: null
+    next_action: "Do not modify until DAX/Rook SDLC slice stabilizes"
+    blocked_by: "Focus limit"
+
+  toolsmith:
+    name: "ToolSmith"
+    role: "Workflow utilities, repo-specific helpers, and repeatable conversion tools"
+    repo: "ShaileshRawat1403/ToolSmith"
+    status: "paused"
+    priority: "medium"
+    current_branch: null
+    next_action: "Do not modify until visibility pilot is complete"
+    blocked_by: "Focus limit"
+
+  tessera:
+    name: "Tessera"
+    role: "Reusable SDK/job-pack patterns for evals, repo tools, prompts, RAG, and transformations"
+    repo: null
+    status: "paused"
+    priority: "medium"
+    current_branch: null
+    next_action: "Design first set of standard templates"
     blocked_by: "Focus limit"
 
   picobot:
@@ -56,17 +96,21 @@ systems:
     blocked_by: "Repo mapping unresolved"
 
 rules:
-  active_system_limit: 2
+  active_system_limit: 3
   active_branch_limit: 3
   daily_report_time_ist: "09:00"
   default_timezone: "Asia/Kolkata"
 
 scope_control:
   active_now:
+    - "brainbench"
     - "dax"
     - "rook"
   paused:
     - "soothsayer"
+    - "flowright"
+    - "toolsmith"
+    - "tessera"
   unmapped:
     - "picobot"
     - "pruningmypothos"

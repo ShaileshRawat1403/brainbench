@@ -22,19 +22,19 @@ jobs:
           DATE=$(TZ=Asia/Kolkata date +"%Y-%m-%d")
           YEAR=$(TZ=Asia/Kolkata date +"%Y")
           MONTH=$(TZ=Asia/Kolkata date +"%m")
-          mkdir -p daily/$YEAR/$MONTH
+          mkdir -p control/daily/$YEAR/$MONTH
 
-          FILE="daily/$YEAR/$MONTH/$DATE.md"
+          FILE="control/daily/$YEAR/$MONTH/$DATE.md"
 
           if [ -f "$FILE" ]; then
             echo "Daily report already exists: $FILE"
             exit 0
           fi
 
-          cp templates/daily-start-report.md "$FILE"
+          cp control/templates/daily-start-report.md "$FILE"
           sed -i "s/{{date}}/$DATE/g" "$FILE"
 
-          cat > daily/latest.md <<EOF
+          cat > control/daily/latest.md <<EOF
           # Latest Daily Report
 
           Current report:
@@ -49,6 +49,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add daily/
+          git add control/daily/
           git commit -m "Create daily start report" || echo "No changes"
           git push
