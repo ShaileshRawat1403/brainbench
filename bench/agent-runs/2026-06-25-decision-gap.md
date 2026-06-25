@@ -8,11 +8,13 @@ status: success
 # Agent Run: Decision Gap Audit
 
 ## Execution Summary
-- **Gaps Detected**: 12
-- **Comparison Window**: 2a49ef94faf1ea5a25f30164915adc4c55a7d8ae -> 533174eb92b55d5046b2e5ae72e73421c73f3a26
+- **Open Gaps**: 0
+- **Resolved Gaps**: 1
+- **Dismissed Gaps**: 0
+- **Comparison Window**: c57f7490cdce60a4cb3fb1beb1ed74f4e3bddfbc -> c57f7490cdce60a4cb3fb1beb1ed74f4e3bddfbc
 - **Dry Run**: false
 
 ## Actions Taken
-- Audited repository diff changes against risk-rules.
-- Generated draft candidate ADR files under `brain/decisions/drafts/` for restricted updates.
+- Audited repository diff changes against risk-rules and grouped by theme.
+- Generated draft candidate ADR files under `brain/decisions/drafts/`.
 - Refreshed `dashboard/decision-gaps.md`.
