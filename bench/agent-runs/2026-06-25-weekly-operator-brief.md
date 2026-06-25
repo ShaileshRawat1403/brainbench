@@ -10,7 +10,7 @@ status: success
 ## Execution Summary
 - **Decision Gaps Counted**: 0
 - **Evidence Gaps Counted**: 1
-- **Mode**: daily
+- **Mode**: weekly
 - **Dry Run**: false
 
 ## Actions Taken

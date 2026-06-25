@@ -28,6 +28,7 @@ evidence_agent:
 weekly_operator_brief:
   can_write:
     - "dashboard/weekly-report.md"
+    - "dashboard/daily-report.md"
     - "dashboard/intelligence-summary.md"
     - "memory/active-context.md"
     - "bench/agent-runs/"

@@ -260,8 +260,9 @@ indexContent += `
 ### Recommended Actions
 ${recommendedActions}
 
-### Latest Operator Brief
-Refer to the detailed [Weekly Report](file://${path.join(DASHBOARD_DIR, 'weekly-report.md')}) for the operational brief.
+### Latest Operator Briefs
+- [Daily Pulse (Operations)](file://${path.join(DASHBOARD_DIR, 'daily-report.md')})
+- [Weekly Review (Trends)](file://${path.join(DASHBOARD_DIR, 'weekly-report.md')})
 `;
 
 updateGeneratedSection(path.join(DASHBOARD_DIR, 'index.md'), indexContent, 'BrainBench Dashboard Index');

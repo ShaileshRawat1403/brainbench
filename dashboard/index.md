@@ -3,7 +3,7 @@
 <!-- brainbench:generated:start -->
 
 ## Operational Control Surface
-- **Last Updated**: 2026-06-25T15:35:57.404Z
+- **Last Updated**: 2026-06-25T15:46:56.238Z
 
 ### Current Status
 - **Active Sprint**: `Brain + Bench Foundation` (`active`)
@@ -27,8 +27,9 @@
 - **Remediate evidence gaps**: Link required PR numbers to ready/done tasks in active sprint backlog.
 
 
-### Latest Operator Brief
-Refer to the detailed [Weekly Report](file:///Users/ananyalayek/.gemini/antigravity/scratch/brainbench/dashboard/weekly-report.md) for the operational brief.
+### Latest Operator Briefs
+- [Daily Pulse (Operations)](file:///Users/ananyalayek/.gemini/antigravity/scratch/brainbench/dashboard/daily-report.md)
+- [Weekly Review (Trends)](file:///Users/ananyalayek/.gemini/antigravity/scratch/brainbench/dashboard/weekly-report.md)
 
 <!-- brainbench:generated:end -->
 

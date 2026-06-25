@@ -6,7 +6,6 @@ import { updateGeneratedBlock } from './shared/generated-blocks';
 
 // Paths
 const REPO_ROOT = path.resolve(__dirname, '../../../../');
-const WEEKLY_REPORT_PATH = path.join(REPO_ROOT, 'dashboard/weekly-report.md');
 const ACTIVE_CONTEXT_PATH = path.join(REPO_ROOT, 'memory/active-context.md');
 const STATE_DIR = path.join(REPO_ROOT, 'state');
 const ECOSYSTEM_PATH = path.join(REPO_ROOT, 'ecosystem.yml');
@@ -20,11 +19,14 @@ const INTELLIGENCE_SUMMARY_PATH = path.join(REPO_ROOT, 'dashboard/intelligence-s
 const dryRun = process.env.DRY_RUN === 'true';
 const agentKey = 'weekly_operator_brief';
 const briefMode = process.env.BRIEF_MODE || 'daily'; // daily | weekly | manual
+const REPORT_PATH = briefMode === 'weekly' 
+  ? path.join(REPO_ROOT, 'dashboard/weekly-report.md') 
+  : path.join(REPO_ROOT, 'dashboard/daily-report.md');
 
 console.log(`[Weekly Brief] Running brief generator (Mode: ${briefMode})...`);
 
 // 1. Enforce path rules
-verifyWritePermission(agentKey, WEEKLY_REPORT_PATH);
+verifyWritePermission(agentKey, REPORT_PATH);
 verifyWritePermission(agentKey, ACTIVE_CONTEXT_PATH);
 verifyWritePermission(agentKey, INTELLIGENCE_SUMMARY_PATH);
 
@@ -132,7 +134,7 @@ let summaryContent = `## Active Quality & Operations Findings
 `;
 
 // Update dashboards
-updateGeneratedBlock(WEEKLY_REPORT_PATH, reportContent, '');
+updateGeneratedBlock(REPORT_PATH, reportContent, '');
 updateGeneratedBlock(INTELLIGENCE_SUMMARY_PATH, summaryContent, '');
 
 // 3. Update active-context.md in the weekly-focus section
@@ -169,7 +171,7 @@ status: success
 
 ## Actions Taken
 - Aggregated audit metrics and status metrics.
-- Refreshed generated block in \`dashboard/weekly-report.md\`.
+- Refreshed generated block in \`${briefMode === 'weekly' ? 'dashboard/weekly-report.md' : 'dashboard/daily-report.md'}\`.
 - Refreshed \`weekly-focus\` generated block in \`memory/active-context.md\`.
 `;
 

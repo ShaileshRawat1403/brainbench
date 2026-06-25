@@ -1,6 +1,6 @@
 last_decision_gap_scan:
-  sha: b3805d9a4330c2f4936e957bf4ea47d8a967b521
-  scanned_at: 2026-06-25T15:01:26.803Z
+  sha: a90006c2d72cfc6f895194bc74106ee2d622616d
+  scanned_at: 2026-06-25T15:46:56.180Z
   result: success
 open_gaps: []
 resolved_gaps:
@@ -41,3 +41,6 @@ dismissed_gaps:
   - id: gap-2026-06-25-13dbf3f-toolsmith-script-architecture
     dismissed_at: 2026-06-25T15:02:00.000Z
     reason: Approved and documented in V0.4 decision log.
+  - id: gap-2026-06-25-a90006c-toolsmith-script-architecture
+    dismissed_at: 2026-06-25T15:47:00.000Z
+    reason: Cockpit Recommended Actions dashboard refinements.
