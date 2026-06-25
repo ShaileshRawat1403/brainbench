@@ -1,6 +1,6 @@
 last_decision_gap_scan:
-  sha: 27b936007e80b0539ea2b4f767d3c3302a1ca024
-  scanned_at: 2026-06-25T13:29:12.439Z
+  sha: ec021dac8fad70fb2d95e739ed3e57c129b5aa42
+  scanned_at: 2026-06-25T13:32:44.098Z
   result: success
 open_gaps: []
 resolved_gaps:
@@ -28,4 +28,7 @@ dismissed_gaps:
     reason: Mechanical repository name renaming inside pr-review.ts.
   - id: gap-2026-06-25-27b9360-state-memory-model
     dismissed_at: 2026-06-25T13:30:00.000Z
+    reason: Mechanical sprint backlog updates.
+  - id: gap-2026-06-25-ec021da-state-memory-model
+    dismissed_at: 2026-06-25T13:33:00.000Z
     reason: Mechanical sprint backlog updates.
