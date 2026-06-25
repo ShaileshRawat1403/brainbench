@@ -4,4 +4,4 @@ memory_index:
   decision_map: "memory/decision-map.md"
   claim_register: "memory/claim-register.md"
   claims_count: 1
-  decisions_count: 2
+  decisions_count: 3
