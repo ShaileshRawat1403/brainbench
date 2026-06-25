@@ -19,6 +19,7 @@
 | `state-yaml-setup` | `in-progress` |
 | `issue-12` | `ready-for-review` |
 | `issue-13` | `done` |
+| `issue-14` | `done` |
 
 <!-- brainbench:generated:end -->
 

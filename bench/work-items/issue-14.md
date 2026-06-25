@@ -2,7 +2,7 @@
 type: work-item
 source: github-issue
 issue: 14
-status: ready-for-review
+status: done
 system: flowright
 priority: medium
 owner: antigravity

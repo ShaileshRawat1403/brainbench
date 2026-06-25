@@ -20,4 +20,4 @@ sprint:
     - task: issue-13
       status: done
     - task: issue-14
-      status: intake
+      status: done

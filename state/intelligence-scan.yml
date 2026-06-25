@@ -1,6 +1,6 @@
 last_decision_gap_scan:
-  sha: f23abb6b65cadb0b11b36ae20ef657b1af89069d
-  scanned_at: 2026-06-25T13:27:59.814Z
+  sha: 27b936007e80b0539ea2b4f767d3c3302a1ca024
+  scanned_at: 2026-06-25T13:29:12.439Z
   result: success
 open_gaps: []
 resolved_gaps:
@@ -26,3 +26,6 @@ dismissed_gaps:
   - id: gap-2026-06-25-f23abb6-toolsmith-script-architecture
     dismissed_at: 2026-06-25T13:28:00.000Z
     reason: Mechanical repository name renaming inside pr-review.ts.
+  - id: gap-2026-06-25-27b9360-state-memory-model
+    dismissed_at: 2026-06-25T13:30:00.000Z
+    reason: Mechanical sprint backlog updates.
