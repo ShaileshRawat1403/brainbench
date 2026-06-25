@@ -5,6 +5,7 @@ title: "Approve BrainBench V0.4.1 Visual Markdown Cockpit Refinements"
 date: 2026-06-25
 status: approved
 owner: Shailesh Rawat
+resolves: gap-2026-06-25-37b251f-toolsmith-script-architecture
 ---
 
 # Decision Record: BrainBench V0.4.1 Visual Markdown Cockpit
