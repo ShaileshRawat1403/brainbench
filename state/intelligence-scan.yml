@@ -1,6 +1,6 @@
 last_decision_gap_scan:
-  sha: f61b2d3687377fcc9978d17e701b2919de7d2e2a
-  scanned_at: 2026-06-25T13:34:35.211Z
+  sha: 0823ee7972cf98baf476f98b7eea901a8b99ffc1
+  scanned_at: 2026-06-25T13:35:35.960Z
   result: success
 open_gaps: []
 resolved_gaps:
@@ -34,4 +34,7 @@ dismissed_gaps:
     reason: Mechanical sprint backlog updates.
   - id: gap-2026-06-25-f61b2d3-state-memory-model
     dismissed_at: 2026-06-25T13:34:00.000Z
+    reason: Mechanical sprint backlog updates.
+  - id: gap-2026-06-25-0823ee7-state-memory-model
+    dismissed_at: 2026-06-25T13:36:00.000Z
     reason: Mechanical sprint backlog updates.
