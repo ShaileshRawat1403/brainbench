@@ -2,10 +2,11 @@
 type: work-item
 source: github-issue
 issue: 15
-status: intake
+status: ready-for-review
 system: toolsmith
-priority: unset
-owner: unset
+priority: low
+owner: antigravity
+pr: 15
 created: 2026-06-25
 last_updated: 2026-06-25
 ---
