@@ -1,6 +1,7 @@
 ---
 repo_id: flowright
 handoff_type: weekly
+handoff_scope: observation_only
 week: 2026-W26
 status: paused
 source_agent: flowright-observer

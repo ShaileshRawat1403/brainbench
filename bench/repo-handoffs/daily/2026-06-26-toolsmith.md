@@ -1,6 +1,7 @@
 ---
 repo_id: toolsmith
 handoff_type: daily
+handoff_scope: observation_only
 date: 2026-06-26
 status: paused
 source_agent: toolsmith-observer

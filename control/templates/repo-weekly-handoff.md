@@ -1,6 +1,7 @@
 ---
 repo_id: <repo_id>
 handoff_type: weekly
+handoff_scope: observation_only
 week: YYYY-WXX
 status: <active|paused|blocked>
 source_agent: <repo_id>-observer
