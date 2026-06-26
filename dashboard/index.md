@@ -1,5 +1,5 @@
 # BrainBench V0.4.3: Visual Command Cockpit
-Generated: 2026-06-26T13:06:50Z
+Generated: 2026-06-26T13:12:02Z
 
 <!-- brainbench:generated:visual-snapshot:start -->
 
@@ -301,6 +301,9 @@ flowchart LR
 
 <!-- brainbench:manual:operator-notes:start -->
 Use this section for human observations during dashboard clarity trials.
+
+- Cockpit Check 2 Observation: Cockpit correctly identified Rook Issue #12 as the next human-review item and confirmed the cleared state after movement. However, completing the movement required manual edits to active-sprint.yml and supporting evidence/PR files. The cockpit passed as a visibility and verification surface, but the operating loop still has friction around state transitions.
+- Remote merge required conflict handling. Local cockpit baseline was retained with -X ours. No state YAML was needed for cockpit operation, but future remote automated runs should be watched for merge noise.
 <!-- brainbench:manual:operator-notes:end -->
 
 ## Human Notes
