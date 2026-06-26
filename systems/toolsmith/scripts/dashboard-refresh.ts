@@ -85,6 +85,17 @@ if (fs.existsSync(dashStatePath)) {
   } catch (e) {}
 }
 
+let agentRegistry: any = {};
+const registryPath = path.join(STATE_DIR, 'repo-agent-registry.yml');
+if (fs.existsSync(registryPath)) {
+  try {
+    const reg = parse(fs.readFileSync(registryPath, 'utf-8'));
+    agentRegistry = reg.repo_agents || {};
+  } catch (e) {
+    console.error('Failed to parse repo-agent-registry.yml:', e);
+  }
+}
+
 // 2. Generate Project Views Dashboard
 let projectViewsContent = `## Systems Registry Overview
 
@@ -354,6 +365,142 @@ function compileIndexFile(
 }
 
 const indexPath = path.join(DASHBOARD_DIR, 'index.md');
+
+// Helper to parse ISO week (YYYY-WXX) to Sunday Date
+function parseWeekToDate(weekStr: string): Date {
+  const match = weekStr.match(/^(\d{4})-W(\d{2})$/);
+  if (!match) return new Date(0);
+  const year = parseInt(match[1]);
+  const week = parseInt(match[2]);
+  
+  // Get Jan 4th of that year (which is always in ISO week 1)
+  const jan4 = new Date(year, 0, 4);
+  const day = jan4.getDay(); // 0 is Sunday, 1 is Monday...
+  const mondayOffset = (day === 0 ? -6 : 1) - day;
+  const mondayWeek1 = new Date(jan4.getTime() + mondayOffset * 24 * 60 * 60 * 1000);
+  
+  const targetMonday = new Date(mondayWeek1.getTime() + (week - 1) * 7 * 24 * 60 * 60 * 1000);
+  const targetSunday = new Date(targetMonday.getTime() + 6 * 24 * 60 * 60 * 1000);
+  return targetSunday;
+}
+
+// Helper to calculate day difference between two dates
+function getDayDiff(d1: Date, d2: Date): number {
+  const date1 = new Date(d1.getFullYear(), d1.getMonth(), d1.getDate());
+  const date2 = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate());
+  return Math.round((date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+interface HandoffInfo {
+  filePath: string;
+  fileName: string;
+  type: 'daily' | 'weekly';
+  dateStr: string;
+  date: Date;
+  requiresAction: boolean;
+  riskLevel: 'low' | 'medium' | 'high';
+  frontmatter: any;
+  content: string;
+}
+
+// Get all handoffs for a repository, sorted by date (latest first)
+function getHandoffsForRepo(repoId: string): HandoffInfo[] {
+  const handoffs: HandoffInfo[] = [];
+  
+  const dailyDir = path.join(REPO_ROOT, 'bench/repo-handoffs/daily');
+  if (fs.existsSync(dailyDir)) {
+    const files = fs.readdirSync(dailyDir);
+    for (const file of files) {
+      if (file.endsWith('.md')) {
+        try {
+          const filePath = path.join(dailyDir, file);
+          const raw = fs.readFileSync(filePath, 'utf-8');
+          const parts = raw.split('---');
+          if (parts.length >= 3) {
+            const fm = parse(parts[1]);
+            if (fm && fm.repo_id === repoId && fm.handoff_type === 'daily') {
+              const dateStr = fm.date || '';
+              const date = new Date(dateStr);
+              handoffs.push({
+                filePath,
+                fileName: file,
+                type: 'daily',
+                dateStr,
+                date,
+                requiresAction: fm.requires_brainbench_action === true || fm.requires_brainbench_action === 'true',
+                riskLevel: fm.risk_level || 'low',
+                frontmatter: fm,
+                content: parts.slice(2).join('---').trim()
+              });
+            }
+          }
+        } catch (e) {
+          console.error(`Error reading daily handoff ${file}:`, e);
+        }
+      }
+    }
+  }
+
+  const weeklyDir = path.join(REPO_ROOT, 'bench/repo-handoffs/weekly');
+  if (fs.existsSync(weeklyDir)) {
+    const files = fs.readdirSync(weeklyDir);
+    for (const file of files) {
+      if (file.endsWith('.md')) {
+        try {
+          const filePath = path.join(weeklyDir, file);
+          const raw = fs.readFileSync(filePath, 'utf-8');
+          const parts = raw.split('---');
+          if (parts.length >= 3) {
+            const fm = parse(parts[1]);
+            if (fm && fm.repo_id === repoId && fm.handoff_type === 'weekly') {
+              const dateStr = fm.week || '';
+              const date = parseWeekToDate(dateStr);
+              handoffs.push({
+                filePath,
+                fileName: file,
+                type: 'weekly',
+                dateStr,
+                date,
+                requiresAction: fm.requires_brainbench_action === true || fm.requires_brainbench_action === 'true',
+                riskLevel: fm.risk_level || 'low',
+                frontmatter: fm,
+                content: parts.slice(2).join('---').trim()
+              });
+            }
+          }
+        } catch (e) {
+          console.error(`Error reading weekly handoff ${file}:`, e);
+        }
+      }
+    }
+  }
+
+  handoffs.sort((a, b) => {
+    const timeA = a.date.getTime();
+    const timeB = b.date.getTime();
+    if (timeA !== timeB) return timeB - timeA;
+    if (a.type === 'daily' && b.type === 'weekly') return -1;
+    if (a.type === 'weekly' && b.type === 'daily') return 1;
+    return 0;
+  });
+
+  return handoffs;
+}
+
+// Extract content of a heading section from markdown
+function getHandoffSectionText(content: string, heading: string): string {
+  const regex = new RegExp(`##\\s+${heading}\\s*\\n+([^#]+)`, 'i');
+  const match = content.match(regex);
+  if (match) {
+    let text = match[1].trim();
+    text = text.split('\n')
+      .map(line => line.trim().replace(/^[-*]\s+/, ''))
+      .filter(line => line.length > 0)
+      .join('; ');
+    return text || 'None';
+  }
+  return 'None';
+}
 
 // Helper to parse systems status.md files
 function parseSystemStatusFile(sysId: string, ecosystemSys: any): any {
@@ -906,6 +1053,59 @@ for (const id in systemsInsights) {
     if (id === 'flowright') nextCandidateAction = 'Create use-case prioritization note';
     else if (id === 'toolsmith') nextCandidateAction = 'Define utility backlog';
     repoActionLanes += `| Next candidate | Open | ${formatCommands(nextCandidateAction)} |\n`;
+  }
+
+  // Retrieve latest handoff and append modest summary
+  const registryEntry = agentRegistry[id];
+  const handoffs = getHandoffsForRepo(id);
+  const latestHandoff = handoffs.length > 0 ? handoffs[0] : null;
+
+  let freshnessVal = 'Unknown';
+  let signalStr = 'None';
+  let needsStr = 'None';
+  let riskStr = 'None';
+  let nextActionStr = 'None';
+
+  if (latestHandoff) {
+    const now = new Date();
+    if (latestHandoff.type === 'daily') {
+      const diffDays = getDayDiff(now, latestHandoff.date);
+      freshnessVal = diffDays <= 1 ? 'Fresh' : 'Stale';
+    } else {
+      const diffDays = getDayDiff(now, latestHandoff.date);
+      freshnessVal = diffDays <= 7 ? 'Fresh' : 'Stale';
+    }
+    
+    // Check registry for cadence override
+    const targetCadence = (registryEntry?.cadence_override === 'test_cycle') ? 'daily' : (registryEntry?.cadence || 'weekly');
+    if (targetCadence === 'daily' && latestHandoff.type === 'weekly') {
+      freshnessVal = 'Stale';
+    }
+
+    if (latestHandoff.type === 'daily') {
+      signalStr = getHandoffSectionText(latestHandoff.content, 'Changed');
+      needsStr = getHandoffSectionText(latestHandoff.content, 'Needs BrainBench');
+      riskStr = getHandoffSectionText(latestHandoff.content, 'Risk');
+      nextActionStr = getHandoffSectionText(latestHandoff.content, 'Recommended next action');
+    } else {
+      signalStr = getHandoffSectionText(latestHandoff.content, 'Progress');
+      needsStr = getHandoffSectionText(latestHandoff.content, 'Decisions needed');
+      riskStr = getHandoffSectionText(latestHandoff.content, 'Risks');
+      nextActionStr = getHandoffSectionText(latestHandoff.content, 'Recommended next week');
+    }
+  }
+
+  repoActionLanes += `\n**Handoff Summary**:\n`;
+  if (latestHandoff) {
+    repoActionLanes += `- **Latest handoff**: [${latestHandoff.dateStr} ${latestHandoff.type}](file://${latestHandoff.filePath})\n`;
+    repoActionLanes += `- **Freshness**: ${freshnessVal}\n`;
+    repoActionLanes += `- **Signal**: ${signalStr}\n`;
+    repoActionLanes += `- **Needs BrainBench**: ${needsStr}\n`;
+    repoActionLanes += `- **Risk**: ${riskStr}\n`;
+    repoActionLanes += `- **Recommended next action**: ${nextActionStr}\n`;
+  } else {
+    repoActionLanes += `- **Latest handoff**: Missing\n`;
+    repoActionLanes += `- **Freshness**: Unknown\n`;
   }
   
   repoActionLanes += `\n</details>\n\n`;

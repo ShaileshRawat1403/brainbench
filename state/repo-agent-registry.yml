@@ -1,0 +1,77 @@
+repo_agents:
+  tessera:
+    repo_id: tessera
+    display_name: Tessera
+    status: paused
+    cadence: weekly
+    cadence_override: test_cycle
+    local_path: "systems/tessera"
+    context_file: "brain/repo-context/tessera.md"
+    allowed_outputs:
+      - "bench/repo-handoffs/daily/"
+      - "bench/repo-handoffs/weekly/"
+    allowed_actions:
+      - observe
+      - summarize
+      - recommend
+    forbidden_actions:
+      - edit_repo_source
+      - change_state
+      - approve_decision
+      - open_pr
+  toolsmith:
+    repo_id: toolsmith
+    display_name: ToolSmith
+    status: paused
+    cadence: weekly
+    cadence_override: test_cycle
+    local_path: "systems/toolsmith"
+    context_file: "brain/repo-context/toolsmith.md"
+    allowed_outputs:
+      - "bench/repo-handoffs/daily/"
+      - "bench/repo-handoffs/weekly/"
+    allowed_actions:
+      - observe
+      - summarize
+      - recommend
+    forbidden_actions:
+      - edit_repo_source
+      - change_state
+      - approve_decision
+      - open_pr
+  flowright:
+    repo_id: flowright
+    display_name: Flowright
+    status: paused
+    cadence: weekly
+    local_path: "systems/flowright"
+    context_file: "brain/repo-context/flowright.md"
+    allowed_outputs:
+      - "bench/repo-handoffs/weekly/"
+    allowed_actions:
+      - observe
+      - summarize
+      - recommend
+    forbidden_actions:
+      - edit_repo_source
+      - change_state
+      - approve_decision
+      - open_pr
+  soothsayer:
+    repo_id: soothsayer
+    display_name: Soothsayer
+    status: paused
+    cadence: weekly
+    local_path: "systems/soothsayer"
+    context_file: "brain/repo-context/soothsayer.md"
+    allowed_outputs:
+      - "bench/repo-handoffs/weekly/"
+    allowed_actions:
+      - observe
+      - summarize
+      - recommend
+    forbidden_actions:
+      - edit_repo_source
+      - change_state
+      - approve_decision
+      - open_pr
