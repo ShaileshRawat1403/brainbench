@@ -14,7 +14,7 @@ sprint:
     - task: system-status-mapping
       status: done
     - task: state-yaml-setup
-      status: in-progress
+      status: done
     - task: issue-12
       status: done
     - task: issue-13

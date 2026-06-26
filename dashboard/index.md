@@ -1,5 +1,5 @@
 # BrainBench V0.4.3: Visual Command Cockpit
-Generated: 2026-06-26T13:12:02Z
+Generated: 2026-06-26T13:26:16Z
 
 <!-- brainbench:generated:visual-snapshot:start -->
 
@@ -10,8 +10,8 @@ Generated: 2026-06-26T13:12:02Z
 > Status: `Running`
 
 > [!TIP]
-> ### Active Sprint: 6 / 7
-> Progress: `86%`
+> ### Active Sprint: 7 / 7
+> Progress: `100%`
 
 > [!TIP]
 > ### Field Trial: 3 / 3
@@ -39,14 +39,14 @@ Generated: 2026-06-26T13:12:02Z
 flowchart LR
   subgraph Execution [Execution]
     direction LR
-    Intake["Intake: 0"] --> Triage["Triage: 2"] --> InProgress["In Progress: 1"]
+    Intake["Intake: 0"] --> Triage["Triage: 2"] --> InProgress["In Progress: 0"]
   end
   subgraph Governance [Governance]
     direction LR
     PrReview["PR Review: 0"] --> Evidence["Evidence: 1"] --> Decision["Decision: 0"]
   end
   subgraph Closure [Closure]
-    Done["Done: 6"]
+    Done["Done: 7"]
   end
   InProgress --> PrReview
   Decision --> Done
@@ -243,7 +243,7 @@ flowchart LR
 | Triage Agent | rook | Touches active core SDLC verification system: rook. | `high` | Review triage suggestions |
 | Evidence Agent | rook | Work item is in status `ready-for-review` but has no mapped PR number in its frontmatter. | High | Link PRs to backlog tasks |
 | Decision Gap Agent | BrainBench | No open decision gaps | High | No action |
-| Weekly Brief | Sprint | 6 / 7 complete | High | No action |
+| Weekly Brief | Sprint | 7 / 7 complete | High | No action |
 
 <!-- brainbench:generated:visual-agent-advisory:end -->
 

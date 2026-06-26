@@ -16,7 +16,7 @@
 |---|---|
 | `refactor-dir-structure` | `done` |
 | `system-status-mapping` | `done` |
-| `state-yaml-setup` | `in-progress` |
+| `state-yaml-setup` | `done` |
 | `issue-12` | `done` |
 | `issue-13` | `done` |
 | `issue-14` | `done` |
