@@ -5,7 +5,7 @@ title: "Approve hosted reliability improvements for the read-only Telegram deliv
 date: 2026-06-27
 status: approved
 owner: Shailesh Rawat
-resolves: gap-2026-06-27-78eeef3-toolsmith-script-architecture
+resolves: gap-2026-06-27-219bc21-toolsmith-script-architecture
 ---
 
 # Decision Record: Approve hosted reliability improvements for the read-only Telegram delivery layer
@@ -20,4 +20,4 @@ To transition to V0.4.9, we introduced operational hardening to the Telegram bot
 4. **Adapter Path Verification**: Validates the presence of `ADAPTER_HERMES_PATH` prior to spawning task commands, printing clean governance failures instead of raw runtime exceptions.
 
 ## Gaps Resolved
-- Resolves: `gap-2026-06-27-78eeef3-toolsmith-script-architecture`
+- Resolves: `gap-2026-06-27-219bc21-toolsmith-script-architecture`
