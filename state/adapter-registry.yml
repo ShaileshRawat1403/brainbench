@@ -1,0 +1,27 @@
+adapters:
+  adapter-hermes:
+    adapter_id: adapter-hermes
+    display_name: "Hermes read-only Intent Bridge"
+    runtime: Hermes
+    kernel: Flowright
+    scope: observation_only
+    allowed_modes:
+      - observe
+      - summarize
+      - recommend
+      - prepare
+    forbidden_modes:
+      - mutate
+      - execute
+      - approve
+      - change_state
+      - open_pr
+      - merge_pr
+      - edit_repo_source
+      - approve_decision
+    audit_target: "bench/agent-runs/hermes/"
+    safety_boundaries:
+      no_state_mutation: true
+      no_pr_creation: true
+      no_decision_approval: true
+      no_repo_source_edit: true

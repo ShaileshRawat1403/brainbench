@@ -1,5 +1,5 @@
 # BrainBench V0.4.3: Visual Command Cockpit
-Generated: 2026-06-27T03:38:20Z
+Generated: 2026-06-27T07:36:04Z
 
 <!-- brainbench:generated:visual-snapshot:start -->
 
@@ -21,9 +21,9 @@ Generated: 2026-06-27T03:38:20Z
 > ### Open Evidence Gaps: 1
 > Status: `Attention`
 
-> [!NOTE]
-> ### Open Decision Gaps: 0
-> Status: `Clear`
+> [!WARNING]
+> ### Open Decision Gaps: 1
+> Status: `Attention`
 
 > [!NOTE]
 > ### Human Review: 0
@@ -43,7 +43,7 @@ flowchart LR
   end
   subgraph Governance [Governance]
     direction LR
-    PrReview["PR Review: 0"] --> Evidence["Evidence: 1"] --> Decision["Decision: 0"]
+    PrReview["PR Review: 0"] --> Evidence["Evidence: 1"] --> Decision["Decision: 1"]
   end
   subgraph Closure [Closure]
     Done["Done: 7"]
@@ -61,7 +61,7 @@ flowchart LR
   InProgress:::active
   PrReview:::clear
   Evidence:::warning
-  Decision:::clear
+  Decision:::warning
   Done:::done
 ```
 
@@ -198,7 +198,7 @@ flowchart LR
 | Decision gaps | Clear | No action |
 
 **Handoff Summary**:
-- **Latest handoff**: [2026-W26 weekly](file:///home/runner/work/brainbench/brainbench/bench/repo-handoffs/weekly/2026-W26-flowright.md)
+- **Latest handoff**: [2026-W26 weekly](file:///Users/ananyalayek/.gemini/antigravity/scratch/brainbench/bench/repo-handoffs/weekly/2026-W26-flowright.md)
 - **Freshness**: Fresh
 - **Signal**: Monitored DAX/Rook build loop compliance and updated integration notes.
 - **Needs BrainBench**: None
@@ -218,7 +218,7 @@ flowchart LR
 | Decision gaps | Clear | No action |
 
 **Handoff Summary**:
-- **Latest handoff**: [2026-06-26 daily](file:///home/runner/work/brainbench/brainbench/bench/repo-handoffs/daily/2026-06-26-toolsmith.md)
+- **Latest handoff**: [2026-06-26 daily](file:///Users/ananyalayek/.gemini/antigravity/scratch/brainbench/bench/repo-handoffs/daily/2026-06-26-toolsmith.md)
 - **Freshness**: Fresh
 - **Signal**: Implemented and verified the `getLatestHandoff` logic in dashboard-refresh.ts.
 - **Needs BrainBench**: None
@@ -238,7 +238,7 @@ flowchart LR
 | Decision gaps | Clear | No action |
 
 **Handoff Summary**:
-- **Latest handoff**: [2026-06-26 daily](file:///home/runner/work/brainbench/brainbench/bench/repo-handoffs/daily/2026-06-26-tessera.md)
+- **Latest handoff**: [2026-06-26 daily](file:///Users/ananyalayek/.gemini/antigravity/scratch/brainbench/bench/repo-handoffs/daily/2026-06-26-tessera.md)
 - **Freshness**: Fresh
 - **Signal**: Drafted a set of reusable step templates for file operations and CLI invocation.
 - **Needs BrainBench**: None
@@ -289,8 +289,8 @@ flowchart LR
 |---|---|---|---|---|
 | Triage Agent | toolsmith | Default low priority assignment. Warning: has unassigned owner, unassigned priority. | `low` | Review roadmap boundary |
 | Triage Agent | rook | Touches active core SDLC verification system: rook. | `high` | Review triage suggestions |
-| Evidence Agent | rook | Work item is in status `ready-for-review` but has no mapped PR number in its frontmatter. | High | Link PRs to backlog tasks |
-| Decision Gap Agent | BrainBench | No open decision gaps | High | No action |
+| Evidence Agent | rook | Work item is in status `done` but has no mapped PR number in its frontmatter. | High | Link PRs to backlog tasks |
+| Decision Gap Agent | Sprint | `state/repo-agent-registry.yml` | High | Review generated decision drafts |
 | Weekly Brief | Sprint | 7 / 7 complete | High | No action |
 
 <!-- brainbench:generated:visual-agent-advisory:end -->
@@ -342,8 +342,8 @@ flowchart LR
 <!-- brainbench:generated:repo-recommended-actions:end -->
 
 ## Latest Operator Briefs
-- [Daily Pulse (Operations)](file:///home/runner/work/brainbench/brainbench/dashboard/daily-report.md)
-- [Weekly Review (Trends)](file:///home/runner/work/brainbench/brainbench/dashboard/weekly-report.md)
+- [Daily Pulse (Operations)](file:///Users/ananyalayek/.gemini/antigravity/scratch/brainbench/dashboard/daily-report.md)
+- [Weekly Review (Trends)](file:///Users/ananyalayek/.gemini/antigravity/scratch/brainbench/dashboard/weekly-report.md)
 
 ## Operator Notes
 
