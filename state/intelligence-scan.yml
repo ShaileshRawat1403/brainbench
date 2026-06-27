@@ -1,8 +1,15 @@
 last_decision_gap_scan:
-  sha: a3e094be8f8e6d365eec47ed4a830dee0b57f867
-  scanned_at: 2026-06-27T08:04:19.306Z
+  sha: 771e162229f53edce05ea186df31402e9fa822c8
+  scanned_at: 2026-06-27T08:15:12.823Z
   result: success
-open_gaps: []
+open_gaps:
+  - id: gap-2026-06-27-771e162-state-memory-model
+    theme: state-memory-model
+    description: Restricted paths under theme `state-memory-model` were modified in
+      comparison window without a matching decision log.
+    files:
+      - state/adapter-registry.yml
+    draft_file: brain/decisions/drafts/draft-771e162-state-memory-model.md
 resolved_gaps:
   - id: gap-2026-06-25-c57f749-state-memory-model
     resolved_at: 2026-06-25T03:20:20.914Z

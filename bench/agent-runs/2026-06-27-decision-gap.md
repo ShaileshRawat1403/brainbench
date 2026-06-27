@@ -8,10 +8,10 @@ status: success
 # Agent Run: Decision Gap Audit
 
 ## Execution Summary
-- **Open Gaps**: 0
+- **Open Gaps**: 1
 - **Resolved Gaps**: 9
 - **Dismissed Gaps**: 13
-- **Comparison Window**: a3e094be8f8e6d365eec47ed4a830dee0b57f867 -> a3e094be8f8e6d365eec47ed4a830dee0b57f867
+- **Comparison Window**: a3e094be8f8e6d365eec47ed4a830dee0b57f867 -> 771e162229f53edce05ea186df31402e9fa822c8
 - **Dry Run**: false
 
 ## Actions Taken
