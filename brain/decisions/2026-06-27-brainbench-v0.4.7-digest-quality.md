@@ -5,7 +5,7 @@ title: "Approve formatting, prioritization, readability, and source-reference im
 date: 2026-06-27
 status: approved
 owner: Shailesh Rawat
-resolves: gap-2026-06-27-digest-quality-gap
+resolves: gap-2026-06-27-1992e31-toolsmith-script-architecture
 ---
 
 # Decision Record: Approve formatting, prioritization, readability, and source-reference improvements for Telegram digest outputs
@@ -27,4 +27,4 @@ To transition to V0.4.7, we refined the simulated Telegram digest output formatt
 5. **Source References**: Added explicit `Source:` file mapping references to all read-only query responses.
 
 ## Gaps Resolved
-- Resolves: `gap-2026-06-27-digest-quality-gap`
+- Resolves: `gap-2026-06-27-1992e31-toolsmith-script-architecture`
