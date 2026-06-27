@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { parse } from 'yaml';
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 
 const REPO_ROOT = path.resolve(__dirname, '../../../');
 
@@ -364,15 +364,34 @@ function main() {
   const requestOutputDir = path.resolve(REPO_ROOT, 'tmp/hermes-requests');
   const auditDir = path.resolve(REPO_ROOT, 'bench/agent-runs/hermes');
 
+  // Verify adapter file presence
+  if (!fs.existsSync(adapterPath)) {
+    console.error('Error: Intent Bridge adapter path not found. Verify ADAPTER_HERMES_PATH.');
+    process.exit(1);
+  }
+
   let allowed = false;
   let governanceReason = '';
   let governanceFallback = '';
 
   try {
-    execSync(
-      `bun run ${adapterPath} --intent ${tmpIntentPath} --request-output-dir ${requestOutputDir} --audit-dir ${auditDir}`,
-      { stdio: 'pipe', encoding: 'utf-8' }
-    );
+    const result = spawnSync('bun', [
+      'run',
+      adapterPath,
+      '--intent',
+      tmpIntentPath,
+      '--request-output-dir',
+      requestOutputDir,
+      '--audit-dir',
+      auditDir
+    ], {
+      encoding: 'utf-8',
+      stdio: 'pipe'
+    });
+    
+    if (result.status !== 0) {
+      throw new Error(result.stderr || 'Execution failed');
+    }
     allowed = true;
   } catch (e: any) {
     allowed = false;

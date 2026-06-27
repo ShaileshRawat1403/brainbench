@@ -5,6 +5,39 @@ import { spawnSync } from 'child_process';
 const REPO_ROOT = path.resolve(__dirname, '../../../');
 const DIGEST_SCRIPT = path.join(REPO_ROOT, 'systems/toolsmith/scripts/telegram-digest.ts');
 
+function sanitizeText(text: string): string {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  if (token && token.trim().length > 5 && token !== 'your_telegram_bot_token_here') {
+    const escapedToken = token.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const regex = new RegExp(escapedToken, 'g');
+    return text.replace(regex, '[REDACTED_TOKEN]');
+  }
+  return text;
+}
+
+async function safeFetch(url: string, options?: RequestInit, maxAttempts = 3, initialDelay = 1000): Promise<Response> {
+  let attempt = 1;
+  let delay = initialDelay;
+  
+  while (true) {
+    try {
+      const res = await fetch(url, options);
+      if (res.status >= 500 && attempt < maxAttempts) {
+        throw new Error(`HTTP status ${res.status}`);
+      }
+      return res;
+    } catch (e: any) {
+      const sanitizedErr = sanitizeText(e.message || String(e));
+      if (attempt >= maxAttempts) {
+        throw new Error(`SafeFetch failed after ${maxAttempts} attempts: ${sanitizedErr}`);
+      }
+      await new Promise(resolve => setTimeout(resolve, delay));
+      attempt++;
+      delay *= 2;
+    }
+  }
+}
+
 function executeDigest(command: string): { code: number; stdout: string; stderr: string } {
   // Use safe spawning with argument arrays to prevent injection
   const result = spawnSync('bun', ['run', DIGEST_SCRIPT, '--command', command], {
@@ -12,8 +45,8 @@ function executeDigest(command: string): { code: number; stdout: string; stderr:
   });
   return {
     code: result.status ?? 1,
-    stdout: result.stdout ?? '',
-    stderr: result.stderr ?? ''
+    stdout: sanitizeText(result.stdout ?? ''),
+    stderr: sanitizeText(result.stderr ?? '')
   };
 }
 
@@ -63,6 +96,29 @@ function shouldFireWeekly(hour: number, minute: number, weekdayStr: string, date
   return hour === 18 && minute === 0 && weekdayStr === 'Sunday' && dateString !== lastSentWeeklyDate;
 }
 
+function validateStartupConfig(botToken?: string, allowedChatIdStr?: string): { valid: boolean; error?: string } {
+  if (!botToken || botToken.trim().length === 0) {
+    return { valid: false, error: 'TELEGRAM_BOT_TOKEN is missing.' };
+  }
+  if (botToken === 'your_telegram_bot_token_here' || botToken.includes('PLACEHOLDER')) {
+    return { valid: false, error: 'TELEGRAM_BOT_TOKEN is a placeholder.' };
+  }
+  if (botToken.length < 10) {
+    return { valid: false, error: 'TELEGRAM_BOT_TOKEN is too short.' };
+  }
+  if (!allowedChatIdStr || allowedChatIdStr.trim().length === 0) {
+    return { valid: false, error: 'TELEGRAM_ALLOWED_CHAT_ID is missing.' };
+  }
+  if (allowedChatIdStr === 'your_telegram_chat_id_here') {
+    return { valid: false, error: 'TELEGRAM_ALLOWED_CHAT_ID is a placeholder.' };
+  }
+  const chatId = parseInt(allowedChatIdStr, 10);
+  if (isNaN(chatId)) {
+    return { valid: false, error: 'TELEGRAM_ALLOWED_CHAT_ID is not a valid number.' };
+  }
+  return { valid: true };
+}
+
 function startScheduler(botToken: string, allowedChatId: number) {
   let lastDailySentDate = '';
   let lastWeeklySentDate = '';
@@ -80,14 +136,18 @@ function startScheduler(botToken: string, allowedChatId: number) {
         const clamped = clampMessage(responseText);
         
         const baseUrl = process.env.TELEGRAM_API_URL || 'https://api.telegram.org';
-        await fetch(`${baseUrl}/bot${botToken}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: allowedChatId,
-            text: clamped
-          })
-        });
+        try {
+          await safeFetch(`${baseUrl}/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: allowedChatId,
+              text: clamped
+            })
+          });
+        } catch (err: any) {
+          console.error('[Scheduler] Failed to send scheduled daily digest after retries:', sanitizeText(err.message));
+        }
       }
       
       if (shouldFireWeekly(nowKolkata.hour, nowKolkata.minute, nowKolkata.weekdayStr, nowKolkata.dateString, lastWeeklySentDate)) {
@@ -98,17 +158,21 @@ function startScheduler(botToken: string, allowedChatId: number) {
         const clamped = clampMessage(responseText);
         
         const baseUrl = process.env.TELEGRAM_API_URL || 'https://api.telegram.org';
-        await fetch(`${baseUrl}/bot${botToken}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: allowedChatId,
-            text: clamped
-          })
-        });
+        try {
+          await safeFetch(`${baseUrl}/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: allowedChatId,
+              text: clamped
+            })
+          });
+        } catch (err: any) {
+          console.error('[Scheduler] Failed to send scheduled weekly digest after retries:', sanitizeText(err.message));
+        }
       }
-    } catch (e) {
-      console.error('[Scheduler] Exception in background scheduler tick:', e);
+    } catch (e: any) {
+      console.error('[Scheduler] Exception in background scheduler tick:', sanitizeText(e.message || String(e)));
     }
   }, 10000); // Check every 10 seconds
 }
@@ -117,30 +181,27 @@ async function runBot() {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const allowedChatIdStr = process.env.TELEGRAM_ALLOWED_CHAT_ID;
   
-  if (!botToken || botToken === 'your_telegram_bot_token_here') {
-    console.error('Error: TELEGRAM_BOT_TOKEN is not configured in environment.');
-    process.exit(1);
-  }
-  if (!allowedChatIdStr || allowedChatIdStr === 'your_telegram_chat_id_here') {
-    console.error('Error: TELEGRAM_ALLOWED_CHAT_ID is not configured in environment.');
+  const validation = validateStartupConfig(botToken, allowedChatIdStr);
+  if (!validation.valid) {
+    console.error(`Error: Configuration validation failed - ${validation.error}`);
     process.exit(1);
   }
 
-  const allowedChatId = parseInt(allowedChatIdStr, 10);
+  const allowedChatId = parseInt(allowedChatIdStr!, 10);
 
   // Webhook state cleanup on startup
   console.log('[Telegram Bot] Starting up. Cleaning up webhook state...');
   try {
     const baseUrl = process.env.TELEGRAM_API_URL || 'https://api.telegram.org';
-    const cleanWebhook = await fetch(`${baseUrl}/bot${botToken}/deleteWebhook?drop_pending_updates=false`);
+    const cleanWebhook = await safeFetch(`${baseUrl}/bot${botToken}/deleteWebhook?drop_pending_updates=false`);
     const cleanRes = await cleanWebhook.json();
     console.log('[Telegram Bot] deleteWebhook result:', cleanRes.ok ? 'success' : 'failed');
-  } catch (e) {
-    console.error('[Telegram Bot] Failed to call deleteWebhook during startup.');
+  } catch (e: any) {
+    console.error('[Telegram Bot] Failed to call deleteWebhook during startup:', sanitizeText(e.message || String(e)));
   }
 
   // Start background schedule triggers
-  startScheduler(botToken, allowedChatId);
+  startScheduler(botToken!, allowedChatId);
 
   console.log('[Telegram Bot] Starting getUpdates long polling loop...');
 
@@ -150,7 +211,7 @@ async function runBot() {
     try {
       const baseUrl = process.env.TELEGRAM_API_URL || 'https://api.telegram.org';
       const url = `${baseUrl}/bot${botToken}/getUpdates?offset=${offset}&timeout=30`;
-      const res = await fetch(url);
+      const res = await safeFetch(url);
       const data = await res.json();
       
       if (!data.ok) {
@@ -175,7 +236,7 @@ async function runBot() {
           console.warn(`[Telegram Bot] Ignored message from unauthorized chat ID: ${chatId}`);
           const baseUrl = process.env.TELEGRAM_API_URL || 'https://api.telegram.org';
           try {
-            await fetch(`${baseUrl}/bot${botToken}/sendMessage`, {
+            await safeFetch(`${baseUrl}/bot${botToken}/sendMessage`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -209,7 +270,7 @@ async function runBot() {
           const baseUrl = process.env.TELEGRAM_API_URL || 'https://api.telegram.org';
           try {
             const clamped = clampMessage(responseText);
-            await fetch(`${baseUrl}/bot${botToken}/sendMessage`, {
+            await safeFetch(`${baseUrl}/bot${botToken}/sendMessage`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -217,13 +278,13 @@ async function runBot() {
                 text: clamped
               })
             });
-          } catch (sendErr) {
-            console.error('[Telegram Bot] Failed to send message reply.');
+          } catch (sendErr: any) {
+            console.error('[Telegram Bot] Failed to send message reply:', sanitizeText(sendErr.message || String(sendErr)));
           }
         }
       }
-    } catch (e) {
-      console.error('[Telegram Bot] Exception in long polling loop.');
+    } catch (e: any) {
+      console.error('[Telegram Bot] Exception in long polling loop:', sanitizeText(e.message || String(e)));
       await new Promise(resolve => setTimeout(resolve, 5000));
     }
   }
@@ -238,12 +299,13 @@ async function main() {
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
     const allowedChatIdStr = process.env.TELEGRAM_ALLOWED_CHAT_ID;
     
-    if (!botToken || !allowedChatIdStr) {
-      console.error('Error: TELEGRAM_BOT_TOKEN or TELEGRAM_ALLOWED_CHAT_ID not configured.');
+    const validation = validateStartupConfig(botToken, allowedChatIdStr);
+    if (!validation.valid) {
+      console.error(`Error: Configuration validation failed - ${validation.error}`);
       process.exit(1);
     }
     
-    const allowedChatId = parseInt(allowedChatIdStr, 10);
+    const allowedChatId = parseInt(allowedChatIdStr!, 10);
     const command = sendDaily ? '/status' : '/weekly';
     console.log(`[Telegram Bot] Sending single update for ${command}...`);
     
@@ -253,7 +315,7 @@ async function main() {
     
     const baseUrl = process.env.TELEGRAM_API_URL || 'https://api.telegram.org';
     try {
-      const pushRes = await fetch(`${baseUrl}/bot${botToken}/sendMessage`, {
+      const pushRes = await safeFetch(`${baseUrl}/bot${botToken}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -264,8 +326,8 @@ async function main() {
       const pushData = await pushRes.json();
       console.log('[Telegram Bot] Push result:', pushData.ok ? 'success' : 'failed');
       process.exit(pushData.ok ? 0 : 1);
-    } catch (e) {
-      console.error('[Telegram Bot] Failed to execute push send.');
+    } catch (e: any) {
+      console.error('[Telegram Bot] Failed to execute push send:', sanitizeText(e.message || String(e)));
       process.exit(1);
     }
   } else {
@@ -274,7 +336,18 @@ async function main() {
   }
 }
 
-export { runBot, executeDigest, clampMessage, main, getKolkataTime, shouldFireDaily, shouldFireWeekly };
+export {
+  runBot,
+  executeDigest,
+  clampMessage,
+  main,
+  getKolkataTime,
+  shouldFireDaily,
+  shouldFireWeekly,
+  sanitizeText,
+  safeFetch,
+  validateStartupConfig
+};
 
 if (import.meta.main) {
   main();
