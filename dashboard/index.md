@@ -1,5 +1,5 @@
 # BrainBench V0.4.3: Visual Command Cockpit
-Generated: 2026-06-28T04:01:37Z
+Generated: 2026-06-29T04:08:20Z
 
 <!-- brainbench:generated:visual-snapshot:start -->
 
@@ -22,7 +22,7 @@ Generated: 2026-06-28T04:01:37Z
 > Status: `Attention`
 
 > [!WARNING]
-> ### Open Decision Gaps: 1
+> ### Open Decision Gaps: 2
 > Status: `Attention`
 
 > [!NOTE]
@@ -43,7 +43,7 @@ flowchart LR
   end
   subgraph Governance [Governance]
     direction LR
-    PrReview["PR Review: 0"] --> Evidence["Evidence: 1"] --> Decision["Decision: 1"]
+    PrReview["PR Review: 0"] --> Evidence["Evidence: 1"] --> Decision["Decision: 2"]
   end
   subgraph Closure [Closure]
     Done["Done: 7"]
@@ -82,7 +82,7 @@ flowchart LR
 <kbd>source bin/activate-hermit</kbd> · <kbd>cargo fmt --check</kbd> · <kbd>cargo clippy --workspace --all-targets --exclude v8 -- -D warnings</kbd> · <kbd>cargo test --workspace</kbd> |
 | **Soothsayer** | No active work | Low | Complete | Clear | No active implementation. | Do not modify until the DAX/Rook SDLC verification slice stabilizes. |
 | **Flowright** | Done | Low | Complete | Clear | Wait for DAX/Rook SDLC core verification loops to stabilize before wiring kernel orchestration. | Review product positioning |
-| **ToolSmith** | Done | Low | Complete | Clear | Support repo visibility, token cost calculations, rule generation, and context packing. | Decide next utility category |
+| **ToolSmith** | Done | Low | Complete | Gaps Found | Support repo visibility, token cost calculations, rule generation, and context packing. | Decide next utility category |
 | **Tessera** | Done | Low | Complete | Clear | Establish a catalog of reusable agent step templates and data conversion rules. | Candidate for next build slice |
 | **Picobot** | No active work | Low | Complete | Clear | Confirm the exact repository name and owner. | Map the repository in `ecosystem.yml` once confirmed. |
 | **PruningMyPothos** | No active work | Low | Complete | Clear | Confirm the exact repository name and owner. | Map the repository in `ecosystem.yml` once confirmed. |
@@ -100,7 +100,7 @@ flowchart LR
 | **Rook** | Complete | Complete | Clear | None | Healthy |
 | **Soothsayer** | Clear | Clear | Clear | None | Healthy |
 | **Flowright** | Complete | Complete | Clear | None | Healthy |
-| **ToolSmith** | Complete | Complete | Clear | None | Healthy |
+| **ToolSmith** | Complete | Complete | Attention | None | Attention |
 | **Tessera** | Complete | Complete | Clear | None | Healthy |
 | **Picobot** | Clear | Clear | Clear | None | Healthy |
 | **PruningMyPothos** | Clear | Clear | Clear | None | Healthy |
@@ -215,7 +215,7 @@ flowchart LR
 | [ToolSmith] Define utility roadmap and repo-helper scope | Complete | Select first repo-helper utility |
 | Freshness | Unknown | No action |
 | Evidence | Complete | No action |
-| Decision gaps | Clear | No action |
+| Decision gaps | Attention | Review candidate decision drafts |
 
 **Handoff Summary**:
 - **Latest handoff**: [2026-06-26 daily](file:///home/runner/work/brainbench/brainbench/bench/repo-handoffs/daily/2026-06-26-toolsmith.md)
@@ -291,6 +291,7 @@ flowchart LR
 | Triage Agent | rook | Touches active core SDLC verification system: rook. | `high` | Review triage suggestions |
 | Evidence Agent | rook | Work item is in status `done` but has no mapped PR number in its frontmatter. | High | Link PRs to backlog tasks |
 | Decision Gap Agent | Sprint | `state/adapter-registry.yml` | High | Review generated decision drafts |
+| Decision Gap Agent | Sprint | <kbd>systems/toolsmith/scripts/telegram-smoke-runner.ts</kbd> | High | Review generated decision drafts |
 | Weekly Brief | Sprint | 7 / 7 complete | High | No action |
 
 <!-- brainbench:generated:visual-agent-advisory:end -->
