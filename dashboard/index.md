@@ -1,5 +1,5 @@
 # BrainBench V0.4.3: Visual Command Cockpit
-Generated: 2026-07-05T03:36:52Z
+Generated: 2026-07-06T03:44:15Z
 
 <!-- brainbench:generated:visual-snapshot:start -->
 
@@ -199,7 +199,7 @@ flowchart LR
 
 **Handoff Summary**:
 - **Latest handoff**: [2026-W26 weekly](file:///home/runner/work/brainbench/brainbench/bench/repo-handoffs/weekly/2026-W26-flowright.md)
-- **Freshness**: Fresh
+- **Freshness**: Stale
 - **Signal**: Monitored DAX/Rook build loop compliance and updated integration notes.
 - **Needs BrainBench**: None
 - **Risk**: None
