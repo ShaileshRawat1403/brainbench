@@ -2,6 +2,6 @@
 
 Current report:
 
-- `control/daily/2026/08/2026-08-04.md`
+- `control/daily/2026/08/2026-08-05.md`
 
 Update this pointer when a new daily report becomes active.
