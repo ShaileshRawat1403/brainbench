@@ -1,6 +1,6 @@
 last_decision_gap_scan:
-  sha: 2b72fa875c2b3d8cf8dd0b323326f74eb1f845f9
-  scanned_at: 2026-08-26T01:22:52.833Z
+  sha: cf4b817c38ebefd2dbb5ebfd7ec5c53af4a48713
+  scanned_at: 2026-08-27T08:05:26.406Z
   result: success
 open_gaps:
   - id: gap-2026-06-27-771e162-state-memory-model
