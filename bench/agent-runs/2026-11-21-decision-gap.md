@@ -1,0 +1,20 @@
+---
+type: agent-run-log
+automation: decision-gap
+date: 2026-11-21
+status: success
+---
+
+# Agent Run: Decision Gap Audit
+
+## Execution Summary
+- **Open Gaps**: 2
+- **Resolved Gaps**: 16
+- **Dismissed Gaps**: 13
+- **Comparison Window**: 0da14581ce32a94e73e1546337b97062a1a7acff -> 1d90949d2816eee1ddb227ee9e27f9ca6847f6c9
+- **Dry Run**: false
+
+## Actions Taken
+- Audited repository diff changes against risk-rules and grouped by theme.
+- Generated draft candidate ADR files under `brain/decisions/drafts/`.
+- Refreshed `dashboard/decision-gaps.md`.
