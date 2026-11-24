@@ -1,7 +1,7 @@
 # Active Context
 
 ## Last Updated
-2026-11-23T06:20:28.500Z
+2026-11-24T08:54:00.768Z
 
 ## Current Focus
 We are running in the **Brain + Bench V2** control plane environment. The active system workflows are governed by automated triggers.
